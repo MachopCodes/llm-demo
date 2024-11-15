@@ -10,23 +10,10 @@ function Chat() {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
-        'https://api.openai.com/v1/chat/completions',
-        {
-          model: 'gpt-3.5-turbo',
-          messages: [{ role: 'user', content: input }],
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
-          },
-        }
-      );
-
-      setResponse(res.data.choices[0].message.content);
+      const res = await axios.post('http://localhost:5000/api/chat', { input });
+      setResponse(res.data.message);
     } catch (error) {
-      console.error(error);
+      console.error('Error:', error);
       setResponse('An error occurred. Please try again.');
     }
   };
